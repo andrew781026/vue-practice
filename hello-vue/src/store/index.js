@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
@@ -26,7 +26,6 @@ export default new Vuex.Store({
     mutations: { // mutations 相當於 Redux.reducer
         '[LIST] updateSingleItem': function (state, payload) {
             state.list.splice(payload.index, 1, payload.newItem);
-            // state.list[payload.index] = payload.newItem;
         },
         '[LIST] deleteSingleItem': function (state, payload) {
             state.list.splice(payload.index, 1);

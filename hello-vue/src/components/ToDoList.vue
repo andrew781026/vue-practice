@@ -9,7 +9,8 @@
                 </b-input-group-text>
             </template>
 
-            <b-form-input
+            <input
+                    class="input"
                     type="text"
                     v-model="item"
                     v-on:keyup.esc="clearItem"
@@ -168,4 +169,16 @@
 
 <style scoped>
 
+    .input {
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid #b1b1b1;
+        padding: 5px 15px 5px 15px; /* top right bottom left */
+    }
+
+    .input:focus {
+        outline: none !important;
+        border: 1px solid #7fbcfe;
+        box-shadow: 0 0 2px 4px #beddfe;
+    }
 </style>
