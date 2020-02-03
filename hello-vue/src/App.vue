@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <h1 :style="{textAlign:'left',marginLeft:'20px'}">Todo List with Vue.js</h1>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <ToDoList/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ToDoList from './components/ToDoList.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    ToDoList
   }
 }
 </script>
