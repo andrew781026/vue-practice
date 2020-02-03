@@ -39,6 +39,7 @@
                     :msg="single.msg"
                     :del="del"
                     :edit="edit"
+                    :doneChange="doneChange"
                     v-else
             />
 
@@ -87,6 +88,14 @@
                     ...this.list[index],
                     msg: newMsg,
                     mode: 'view'
+                };
+
+                this.list = [...this.list];
+            },
+            doneChange: function (newDone, index) {
+                this.list[index] = {
+                    ...this.list[index],
+                    done: newDone,
                 };
 
                 this.list = [...this.list];

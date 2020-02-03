@@ -1,7 +1,7 @@
 <template>
     <div class="todo">
 
-        <b-form-checkbox v-model="done">
+        <b-form-checkbox v-on:change="checkChange" v-model="isDone">
 
             <del v-if="done === true">{{msg}}</del>
             <span v-else>{{msg}}</span>
@@ -23,7 +23,19 @@
             msg: String,
             del: Function,
             edit: Function,
+            doneChange: Function,
         },
+        methods: {
+            checkChange: function (checked) {
+
+                this.doneChange(checked, this.index);
+            },
+        },
+        data() {
+            return {
+                isDone: this.done,
+            }
+        }
     }
 </script>
 
