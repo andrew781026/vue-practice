@@ -1,13 +1,11 @@
 <template>
     <div :style="{width:'50vw',margin:'10px'}">
 
-        <b-input-group :style="{marginBottom:'20px'}">
+        <div class="content-input">
 
-            <template v-slot:append v-if="Boolean(item)">
-                <b-input-group-text @click="clearItem">
-                    <strong class="text-danger">x</strong>
-                </b-input-group-text>
-            </template>
+            <div v-if="Boolean(item)" class="clear-button" @click="clearItem">
+                &#88;
+            </div>
 
             <input
                     class="input"
@@ -18,8 +16,7 @@
                     placeholder="請輸入新的待辦事項"
             />
 
-        </b-input-group>
-
+        </div>
 
         <template v-for="(single,index) in list">
 
@@ -45,7 +42,6 @@
             />
 
         </template>
-
 
     </div>
 </template>
@@ -168,6 +164,28 @@
 </script>
 
 <style scoped>
+
+    .content-input {
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .clear-button {
+        margin-bottom: 20px;
+        position: absolute;
+        height: calc(100% - 2px);
+        padding: 0 10px 0 10px;
+        top: 1px;
+        right: 1px;
+        background-color: #e8ebee;
+        border-left: 1px solid #b1b1b1;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        display: flex;
+        align-items: center;
+        color: red;
+        font-weight: 700;
+    }
 
     .input {
         width: 100%;
