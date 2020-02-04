@@ -27,8 +27,6 @@
                     :index="index"
                     :done="single.done"
                     :msg="single.msg"
-                    :confirm="confirm"
-                    :cancel="cancel"
             />
 
             <ViewSingleToDo
@@ -37,9 +35,6 @@
                     :index="index"
                     :done="single.done"
                     :msg="single.msg"
-                    :del="del"
-                    :edit="edit"
-                    :doneChange="doneChange"
             />
 
         </template>
@@ -69,122 +64,17 @@
                 if (this.item) {
 
                     this.addSingleItem({newItem: {msg: this.item}});
-
-                    /*
-                        this.$store.dispatch('addItem', {
-                            newToDo: {msg: this.item},
-                        });
-
-                        this.list.push({msg: this.item});
-                    */
-
                     this.item = '';
                 }
             },
             clearItem: function () {
                 this.item = '';
             },
-            edit: function (index) {
-
-                this.updateSingleItem({index, newItem: {mode: 'edit'}});
-
-                /*
-
-                const newToDo = {
-                    ...this.list[index],
-                    mode: 'edit'
-                };
-
-                // 利用 arr.splice(startIndex, deleteCount, addItem)
-                // this.list.splice(index, 1, newToDo);
-
-                this.$store.dispatch('updateItem', {
-                    newToDo,
-                    index
-                });
-
-                */
-            },
-            del: function (index) {
-
-                this.deleteSingleItem({index});
-                // this.$store.dispatch('deleteItem', {index});
-            },
-            confirm: function (newMsg, index) {
-
-                this.updateSingleItem({
-                    index,
-                    newItem: {
-                        msg: newMsg,
-                        mode: 'view'
-                    }
-                });
-
-                /*
-
-                const newToDo = {
-                    ...this.list[index],
-                    msg: newMsg,
-                    mode: 'view'
-                };
-
-                // 利用 arr.splice(startIndex, deleteCount, addItem)
-                // this.list.splice(index, 1, newToDo);
-
-                this.$store.dispatch('updateItem', {
-                    newToDo,
-                    index
-                });
-
-                */
-            },
-            doneChange: function (newDone, index) {
-
-                this.updateSingleItem({index, newItem: {done: newDone}});
-
-                /*
-
-                const newToDo = {
-                    ...this.list[index],
-                    done: newDone,
-                };
-
-                // 利用 vm.$set(array, index, value) 方法
-                // this.$set(this.list, index, newToDo);
-
-                this.$store.dispatch('updateItem', {
-                    newToDo,
-                    index
-                });
-
-                */
-            },
-            cancel: function (index) {
-
-                this.updateSingleItem({index, newItem: {mode: 'view'}});
-
-                /*
-
-                const newToDo = {
-                    ...this.list[index],
-                    mode: 'view'
-                };
-
-                // 利用 arr.splice(startIndex, deleteCount, addItem)
-                // this.list.splice(index, 1, newToDo);
-
-                this.$store.dispatch('updateItem', {
-                    newToDo,
-                    index
-                });
-
-                 */
-            },
         },
         updated: function () {
             // window.console.log('this.list=', this.list);
         },
-        data() {
+        data: function () {
 
             window.console.log('this.$store.state.list=', this.$store.state.list);
 

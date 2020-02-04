@@ -15,23 +15,34 @@
 </template>
 
 <script>
+    import {mapMutations} from 'vuex';
+
     export default {
         name: "ViewSingleToDo",
         props: {
             done: Boolean,
             index: Number,
             msg: String,
-            del: Function,
-            edit: Function,
-            doneChange: Function,
         },
         methods: {
+            ...mapMutations([
+                'updateSingleItem',
+                'deleteSingleItem',
+            ]),
+            edit: function (index) {
+
+                this.updateSingleItem({index, newItem: {mode: 'edit'}});
+            },
+            del: function (index) {
+
+                this.deleteSingleItem({index});
+            },
             checkChange: function (checked) {
 
-                this.doneChange(checked, this.index);
+                this.updateSingleItem({index: this.index, newItem: {done: checked}});
             },
         },
-        data() {
+        data: function () {
             return {
                 isDone: this.done,
             }
