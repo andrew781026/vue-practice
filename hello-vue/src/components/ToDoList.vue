@@ -1,5 +1,5 @@
 <template>
-    <div :style="{width:'50vw',margin:'10px'}">
+    <div class="root">
 
         <div class="content-input">
 
@@ -87,6 +87,11 @@
 </script>
 
 <style scoped>
+
+    .root {
+        width: 50vw;
+        margin: 10px;
+    }
 
     .content-input {
         display: flex;
