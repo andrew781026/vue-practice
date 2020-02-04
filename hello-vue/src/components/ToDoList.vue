@@ -3,11 +3,8 @@
 
         <div class="content-input">
 
-            <div v-if="Boolean(item)" class="clear-button" @click="clearItem">
-                &#88;
-            </div>
-
             <input
+                    :class="Boolean(item)?'has-button':'no-button'"
                     class="input"
                     type="text"
                     v-model="item"
@@ -15,6 +12,10 @@
                     v-on:keyup.enter="addItem"
                     placeholder="請輸入新的待辦事項"
             />
+
+            <div v-if="Boolean(item)" class="clear-button" @click="clearItem">
+                &#88;
+            </div>
 
         </div>
 
@@ -49,6 +50,7 @@
 <script>
     import ViewSingleToDo from './ViewSingleToDo';
     import EditSingleToDo from './EditSingleToDo';
+    import {mapMutations} from 'vuex';
 
     export default {
         name: 'ToDoList',
@@ -57,15 +59,25 @@
             EditSingleToDo,
         },
         methods: {
+            ...mapMutations([
+                'updateSingleItem',
+                'deleteSingleItem',
+                'addSingleItem',
+            ]),
             addItem: function () {
 
                 if (this.item) {
 
-                    this.$store.dispatch('addItem', {
-                        newToDo: {msg: this.item},
-                    });
+                    this.addSingleItem({newItem: {msg: this.item}});
 
-                    // this.list.push({msg: this.item});
+                    /*
+                        this.$store.dispatch('addItem', {
+                            newToDo: {msg: this.item},
+                        });
+
+                        this.list.push({msg: this.item});
+                    */
+
                     this.item = '';
                 }
             },
@@ -73,6 +85,10 @@
                 this.item = '';
             },
             edit: function (index) {
+
+                this.updateSingleItem({index, newItem: {mode: 'edit'}});
+
+                /*
 
                 const newToDo = {
                     ...this.list[index],
@@ -86,11 +102,25 @@
                     newToDo,
                     index
                 });
+
+                */
             },
             del: function (index) {
-                this.$store.dispatch('deleteItem', {index});
+
+                this.deleteSingleItem({index});
+                // this.$store.dispatch('deleteItem', {index});
             },
             confirm: function (newMsg, index) {
+
+                this.updateSingleItem({
+                    index,
+                    newItem: {
+                        msg: newMsg,
+                        mode: 'view'
+                    }
+                });
+
+                /*
 
                 const newToDo = {
                     ...this.list[index],
@@ -105,8 +135,14 @@
                     newToDo,
                     index
                 });
+
+                */
             },
             doneChange: function (newDone, index) {
+
+                this.updateSingleItem({index, newItem: {done: newDone}});
+
+                /*
 
                 const newToDo = {
                     ...this.list[index],
@@ -120,19 +156,14 @@
                     newToDo,
                     index
                 });
+
+                */
             },
             cancel: function (index) {
-                // vue 中的資料更新 : https://pjchender.blogspot.com/2017/05/vue-vue-reactivity.html
+
+                this.updateSingleItem({index, newItem: {mode: 'view'}});
 
                 /*
-
-                // 此 method , vue 會監測不到更新
-                this.list[index] = {
-                    ...this.list[index],
-                    mode: 'view'
-                };
-
-                 */
 
                 const newToDo = {
                     ...this.list[index],
@@ -146,6 +177,8 @@
                     newToDo,
                     index
                 });
+
+                 */
             },
         },
         updated: function () {
@@ -166,21 +199,20 @@
 <style scoped>
 
     .content-input {
+        display: flex;
         margin-bottom: 20px;
         position: relative;
     }
 
     .clear-button {
-        margin-bottom: 20px;
-        position: absolute;
-        height: calc(100% - 2px);
+        min-height: 100%;
         padding: 0 10px 0 10px;
-        top: 1px;
-        right: 1px;
         background-color: #e8ebee;
-        border-left: 1px solid #b1b1b1;
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
+        border-top: 1px solid #b1b1b1;
+        border-right: 1px solid #b1b1b1;
+        border-bottom: 1px solid #b1b1b1;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
         display: flex;
         align-items: center;
         color: red;
@@ -188,10 +220,19 @@
     }
 
     .input {
-        width: 100%;
-        border-radius: 5px;
+        z-index: 1;
+        flex: 1;
         border: 1px solid #b1b1b1;
         padding: 5px 15px 5px 15px; /* top right bottom left */
+    }
+
+    .input.no-button {
+        border-radius: 5px;
+    }
+
+    .input.has-button {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
     }
 
     .input:focus {

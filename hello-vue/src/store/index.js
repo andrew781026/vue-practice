@@ -24,13 +24,34 @@ export default new Vuex.Store({
         ],
     },
     mutations: { // mutations 相當於 Redux.reducer
-        '[LIST] updateSingleItem': function (state, payload) {
-            state.list.splice(payload.index, 1, payload.newItem);
+        updateSingleItem: function (state, {newItem, index}) {
+
+            // mix newItem and current Item properties
+            const singleItem = {
+                ...state.list[index],
+                ...newItem,
+            };
+
+            // vue 中的資料更新 : https://pjchender.blogspot.com/2017/05/vue-vue-reactivity.html
+
+            /*
+
+            // 此 method , vue 會監測不到更新
+            state.list[index] = {
+                ...state.list[index],
+                mode: 'view'
+            };
+
+            */
+
+            // 利用 arr.splice(startIndex, deleteCount, addItem)
+            // state.list.splice(index, 1, newToDo);
+            state.list.splice(index, 1, singleItem);
         },
-        '[LIST] deleteSingleItem': function (state, payload) {
+        deleteSingleItem: function (state, payload) {
             state.list.splice(payload.index, 1);
         },
-        '[LIST] addSingleItem': function (state, payload) {
+        addSingleItem: function (state, payload) {
             state.list.push(payload.newItem);
         },
     },
@@ -38,7 +59,7 @@ export default new Vuex.Store({
         updateItem(context, payload) {
 
             context.commit({
-                type: '[LIST] updateSingleItem',
+                type: 'updateSingleItem',
                 newItem: payload.newToDo,
                 index: payload.index
             })
@@ -46,14 +67,14 @@ export default new Vuex.Store({
         deleteItem(context, payload) {
 
             context.commit({
-                type: '[LIST] deleteSingleItem',
+                type: 'deleteSingleItem',
                 index: payload.index
             })
         },
         addItem(context, payload) {
 
             context.commit({
-                type: '[LIST] addSingleItem',
+                type: 'addSingleItem',
                 newItem: payload.newToDo
             })
         },

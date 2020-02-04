@@ -28,7 +28,7 @@
 
             this.newToDo = this.msg;
         },
-        data() {
+        data: function () {
             return {
                 newToDo: this.newToDo,
             }
@@ -38,8 +38,8 @@
 
 <style scoped>
 
-    .input{
-        width:50%;
+    .input {
+        width: 50%;
     }
 
     .todo {
